@@ -8,62 +8,62 @@ Phoenix is a Rails like MVC framework for the Erlang based Elixir functional pro
 ####################
 ```
 
-So what is Plug? Well, the Plug guides define it as follows:
+I think it's worth spending some time understanding Plug in the same way understanding Rack can help illuminate what Rails does under the hood. So what is Plug? Well, the Plug [guides](https://github.com/elixir-lang/plug) define it as follows:
 
 ```
-A specification for composable modules in between web applications
-Connection adapters for different web servers in the Erlang VM
+1. A specification for composable modules in between web applications
+2. Connection adapters for different web servers in the Erlang VM
 ```
 
+I think it's worth taking a moment to break down the above statements. Plug allows us to do two things:
 
+### (1) A Specification for Composable Modules
 
-A simple `Hello world` app written in Plug:
+Plug allows us to create distinct modules that we can use (which is why they are called plugs) that expect something and return something else ([link]https://github.com/elixir-lang/plug/blob/master/lib/plug.ex#L3-L21 to plug specs). There are two types of plugs: (a) function plugs; and (b) module plugs.
+
+##### (a) Function plugs
+
+The specs for a function plug:
 
 ```elixir
-defmodule MyPlug do
-  import Plug.Conn
+(Plug.Conn.t, Plug.opts) :: Plug.Conn.t
+```
 
-  def init(options) do
-    # initialize options
+As we can see above, a function plug takes in a connection `Plug.Conn.t` and some options `Plug.opts` and returns a connection `Plug.Conn.t`. The options that the function plug can receive are a set of tuple, atom, integer, or float.
 
-    options
+The following is an example of a function plug:
+
+```elixir
+def json_header_plug(conn, opts) do
+  conn |> put_resp_content_type("application/json")
+end
+```
+
+##### (b) Module plugs
+
+A module plug must export two functions, a `call/2` function that is like the function plug above and a `init/1` plug that takes in a set of options to initialize.
+
+THe following is an example of a module plug:
+
+```elixir
+defmodule JSONHeaderPlug do
+  def init(opts) do
+    opts
   end
-
   def call(conn, _opts) do
-    conn
-    |> put_resp_content_type("text/plain")
-    |> send_resp(200, "Hello world")
+    conn |> put_resp_content_type("application/json")
   end
 end
 ```
 
-Here we define a `plug`, which is two things: (1) a function that receives a connection and a set of options as arguments and returns a connection; or (2) a module that provides an `init/1` function to initialize options and implement the `call/2` function (receiving the connection and options) returning the connection.
+### (2) Connection Adapters for Different Web Servers in the Erlang VM
 
-It's important to keep in mind that a connection is immutable. Each manipulation returns a new copy of the connection. What is a connection? It is a *direct interface to the underlying server*.
+Plug's connection adapters allow it to interface with HTTP servers like [Cowboy](https://github.com/ninenines/cowboy).
 
-## The Plug Router
-
-```elixir
-defmodule AppRouter do
-  use Plug.Router
-
-  plug :match
-  plug :dispatch
-
-  get "/hello" do
-    send_resp(conn, 200, "world")
-  end
-
-  forward "/users", to: UsersRouter
-
-  match _ do
-    send_resp(conn, 404, "oops")
-  end
-end
-```
-
-The Plug router is both a plug and contains its own plug pipeline. In the above example, when the router is invoked, it invokes the `:match` plug (a `match/2` function) and then calls the `:dispatch` plug which executes the matched code.
+##
 
 
-`plug Plug.Logger` allows logging on the router.
 
+##### More reading
+* Plug's [plug](https://github.com/elixir-lang/plug/blob/master/lib/plug.ex#L3-L21) specifications
+* [Web Development Using Elixir](https://leanpub.com/web-development-using-elixir/read) by Shane Logsdon
