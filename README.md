@@ -19,7 +19,7 @@ I think it's worth taking a moment to break down the above statements. Plug allo
 
 ### (1) A Specification for Composable Modules
 
-Plug allows us to create distinct modules that we can use (which is why they are called plugs) that expect something and return something else ([link]https://github.com/elixir-lang/plug/blob/master/lib/plug.ex#L3-L21 to plug specs). There are two types of plugs: (a) function plugs; and (b) module plugs.
+Plug allows us to create distinct modules that we can use (which is why they are called plugs) that expect something and return something else ([link](https://github.com/elixir-lang/plug/blob/master/lib/plug.ex#L3-L21) to plug specs). There are two types of plugs: (a) function plugs; and (b) module plugs.
 
 ##### (a) Function plugs
 
