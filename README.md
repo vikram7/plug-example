@@ -60,9 +60,9 @@ end
 
 Plug's connection adapters allow it to interface with HTTP servers like [Cowboy](https://github.com/ninenines/cowboy).
 
-##
+## Walk through Hello World
 
-
+## Walk through something a bit more interesting
 
 ##### More reading
 * Plug's [plug](https://github.com/elixir-lang/plug/blob/master/lib/plug.ex#L3-L21) specifications
