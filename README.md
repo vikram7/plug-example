@@ -2,11 +2,11 @@ Phoenix is a Rails like MVC framework for the Erlang-based Elixir functional pro
 
 
 ```
-                     #####################         ##############
-############         # Phoenix ##        #         # Connection #
-# Response #  <---   ############  Plug  #  <----  ##############
-############         # Cowboy  ##        #         #   Request  #
-                     #####################         ##############
+##############         ###############################         ##############
+# Connection #         #        ## Phoenix ##        #         # Connection #
+##############  <---   #  Plug  #############  Plug  #  <----  ##############
+#  Response  #         #        ## Cowboy  ##        #         #   Request  #
+##############         ###############################         ##############
 ```
 
 Though this is somewhat analagous to Ruby's Rack middleware, we should note one difference between Rack and Plug. With plug, you receive a single connection. This differs with respect to Rack, where you expect a request and response. Instead, Plug allows a response to [be sent through the connection at any time]. [Why is this valuable?]
