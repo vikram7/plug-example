@@ -39,6 +39,8 @@ def json_header_plug(conn, opts) do
 end
 ```
 
+[Description of what the above is doing]
+
 ##### (b) Module plugs
 
 A module plug must export two functions, a `call/2` function that is like the function plug above and a `init/1` plug that takes in a set of options to initialize.
@@ -50,11 +52,14 @@ defmodule JSONHeaderPlug do
   def init(opts) do
     opts
   end
+
   def call(conn, _opts) do
     conn |> put_resp_content_type("application/json")
   end
 end
 ```
+
+[Description of what the above is doing]
 
 ### (2) Connection Adapters for Different Web Servers in the Erlang VM
 
