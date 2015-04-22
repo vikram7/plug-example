@@ -1,23 +1,21 @@
-#### Phoenix
+Phoenix is a Rails like MVC framework for the Erlang based Elixir functional programming language. While Phoenix aims for very high developer productiveness along with application performance ([why is this uncommon]), it is based on a middleware called Plug, which is somewhat analagous to Ruby's Rack middleware:
 
-* An elixir based web development framework
-* MVC Design Pattern
-* Similar to Ruby on Rails
-* Aims for high productivity and application performance; also handles realtime events well with channels
-
-
+```
 ####################
 #     Phoenix      #
 ####################
 #     Plug         #
 ####################
+```
 
+So what is Plug? Well, the Plug guides define it as follows:
 
-Plug is:
 ```
 A specification for composable modules in between web applications
 Connection adapters for different web servers in the Erlang VM
 ```
+
+
 
 A simple `Hello world` app written in Plug:
 
